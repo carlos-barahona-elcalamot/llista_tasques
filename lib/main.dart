@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'controlador.dart';
+
 void main() {
   runApp(Todo());
 }
@@ -12,13 +14,15 @@ class Todo extends StatelessWidget {
 }
 
 class TodoList extends StatefulWidget {
+  
+  final Controlador _controlador=Controlador();
+  
   @override
   _TodoListState createState() => _TodoListState();
 }
 
 class _TodoListState extends State<TodoList> {
-  // save data
-  final List<String> _todoList = <String>[];
+
   // text field
   final TextEditingController _textFieldController = TextEditingController();
   @override
@@ -38,7 +42,7 @@ class _TodoListState extends State<TodoList> {
     // Wrapping it inside a set state will notify
     // the app that the state has changed
     setState(() {
-      _todoList.add(title);
+      widget._controlador.afegirTasca(title);
     });
     _textFieldController.clear();
   }
@@ -84,7 +88,7 @@ class _TodoListState extends State<TodoList> {
   // iterates through our todo list title
   List<Widget> _getItems() {
     final List<Widget> _todoWidgets = <Widget>[];
-    for (String title in _todoList) {
+    for (String title in widget._controlador.llistaTasques) {
       _todoWidgets.add(_buildTodoItem(title));
     }
     return _todoWidgets;
